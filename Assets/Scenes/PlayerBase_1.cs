@@ -95,7 +95,14 @@ public class PlayerBase_1 : MonoBehaviour
             //Vector3 bounceForce = newDir * 100f;
             //rb.AddForce(bounceForce);
         }
-        else if(collision.gameObject.tag == "Entity")
+        else if (collision.gameObject.tag == "Entity")
+        {
+            Vector3 normal = collision.GetContact(0).normal;
+            Vector3 bounceHeight = Vector3.up * 0.5f;   //bounceUp = 0.5f;
+            Vector3 bounceVector = (normal + bounceHeight) * 250f;  //bounceForce = 500f;
+            rb.AddForce(bounceVector);
+        }
+        else if (collision.gameObject.tag == "Bumper")
         {
             Vector3 normal = collision.GetContact(0).normal;
             Vector3 bounceHeight = Vector3.up * 0.5f;   //bounceUp = 0.5f;
