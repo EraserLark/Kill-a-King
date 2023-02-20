@@ -1,0 +1,47 @@
+// No slowing, no stopping, Player will keep moving original direction until mouse button is released
+    void Update()
+    {
+        if (Input.GetButton("Fire1"))
+        {
+            float rotateSpeed = turnSpeed * Input.GetAxis("Mouse X");
+            transform.Rotate(0f, rotateSpeed, 0f);
+        }
+        else if (Input.GetButtonUp("Fire1"))
+        {
+            moveDir = transform.forward;
+        }
+    }
+
+//Player will slow down (eventually to a stop) while mouse is held. Will not move in new direction until mouse button is released.
+    void Update()
+    {
+        if (Input.GetButton("Fire1"))
+        {
+            moveDir = Vector3.zero;
+
+            float rotateSpeed = turnSpeed * Input.GetAxis("Mouse X");
+            transform.Rotate(0f, rotateSpeed, 0f);
+        }
+        else if (Input.GetButtonUp("Fire1"))
+        {
+            moveDir = transform.forward;
+        }
+    }
+
+//No stop with slo-mo!
+    void Update()
+    {
+        if (Input.GetButton("Fire1"))
+        {
+            Time.timeScale = 0.5f;
+
+            float rotateSpeed = turnSpeed * Input.GetAxis("Mouse X");
+            transform.Rotate(0f, rotateSpeed, 0f);
+        }
+        else if (Input.GetButtonUp("Fire1"))
+        {
+            Time.timeScale = 1f;
+            moveDir = transform.forward;
+        }
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;
+    }
