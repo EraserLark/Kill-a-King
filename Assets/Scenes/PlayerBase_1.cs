@@ -81,15 +81,36 @@ public class PlayerBase_1 : MonoBehaviour
 
         if (collision.gameObject.tag == "Solid")
         {
+            //RICOCHET METHOD
+            //Store current vel, stop player
+            float prevSpeed = rb.velocity.magnitude;
+            rb.velocity = Vector3.zero;
+
+            //Calculate reflected angle
             Vector3 normal = collision.GetContact(0).normal;
             Vector3 playerDir = transform.forward;
 
             float dot = Vector3.Dot(normal, playerDir);
             Vector3 newDir = playerDir - (2 * dot * normal);
 
-            //moveSpeed = 5f;
-            moveDir = newDir;   //Ricochet (but player needs to rotate still)
-            //rb.AddForce(newDir, ForceMode.)
+            moveDir = newDir;
+
+            //Add back in new speed
+            float currentSpeed = prevSpeed;
+            Vector3 targetVel = moveDir * Time.deltaTime;
+
+            //Rough speed capping
+            if (currentSpeed > maxSpeed)
+            {
+                float speedDiff = currentSpeed - maxSpeed;
+                targetVel *= speedDiff;
+            }
+            else
+            {
+                targetVel *= moveSpeed;
+            }
+
+            rb.velocity = targetVel;
 
             //Trying bounce backwards, not working yet...
             //Vector3 bounceForce = newDir * 100f;
