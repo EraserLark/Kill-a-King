@@ -33,22 +33,7 @@ public class PlayerBase_1 : MonoBehaviour
 
     void Update()
     {
-        /*
-        if (Input.GetButton("Fire1"))
-        {
-            Time.timeScale = 0.5f;
-            //moveDir = Vector3.zero;
 
-            float rotateSpeed = turnSpeed * Input.GetAxis("Mouse X");
-            //transform.Rotate(0f, rotateSpeed, 0f);    //If cam is child of player
-        }
-        else if (Input.GetButtonUp("Fire1"))
-        {
-            Time.timeScale = 1f;
-            moveDir = transform.forward;
-        }
-        Time.fixedDeltaTime = 0.02f * Time.timeScale;
-        */
     }
 
     private void FixedUpdate()
@@ -69,6 +54,10 @@ public class PlayerBase_1 : MonoBehaviour
         }
 
         rb.AddForce(targetVel, ForceMode.VelocityChange);
+
+        //Rotate Body
+        Quaternion lookRot = Quaternion.LookRotation(moveDir, Vector3.up);
+        playerBody.transform.rotation = lookRot;
 
         //DEBUG
         rbVelocity = rb.velocity.magnitude;
