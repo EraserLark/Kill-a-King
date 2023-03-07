@@ -68,6 +68,7 @@ public class PlayerBase_1 : MonoBehaviour
     {
         print(collision.gameObject.name);    //DEBUG
 
+        //Currently Unused, need to re-tag walls in game to use
         if (collision.gameObject.tag == "Solid")
         {
             //RICOCHET METHOD
@@ -118,6 +119,11 @@ public class PlayerBase_1 : MonoBehaviour
             Vector3 bounceHeight = Vector3.up * 0.5f;   //bounceUp = 0.5f;
             Vector3 bounceVector = (normal + bounceHeight) * 500f;  //bounceForce = 500f;
             rb.AddForce(bounceVector);
+        }
+        else if(collision.gameObject.tag == "Ramp")
+        {
+            Vector3 rampForce = collision.transform.forward * 12f;
+            rb.AddForce(rampForce, ForceMode.VelocityChange);
         }
         //Duplicate for bouncy objects, but have player change direction too!
     }
