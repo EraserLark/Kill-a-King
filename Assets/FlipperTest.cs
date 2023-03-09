@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FlipperTest : MonoBehaviour
@@ -9,6 +7,13 @@ public class FlipperTest : MonoBehaviour
     private HingeJoint joint;
     private JointMotor motor;
 
+    [SerializeField]
+    private float motorForce = 2500f;
+    [SerializeField]
+    private float motorVel = 900f;
+    [SerializeField]
+    private bool motorFreeSpin = false;
+
     private void Awake()
     {
         triggerColl = GetComponents<BoxCollider>()[1];  //Get trigger collider, not other boxColl
@@ -16,14 +21,17 @@ public class FlipperTest : MonoBehaviour
         joint = GetComponent<HingeJoint>();
         motor = joint.motor;
 
-        motor.force = 1000;
-        motor.targetVelocity = 900;
-        motor.freeSpin = false;
+        motor.force = motorForce;
+        motor.targetVelocity = motorVel;
+        motor.freeSpin = motorFreeSpin;
         joint.motor = motor;
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        motor.targetVelocity = motorVel;
+        joint.motor = motor;
+
         joint.useMotor = true;
         triggerColl.enabled = false;
 
@@ -32,19 +40,10 @@ public class FlipperTest : MonoBehaviour
 
     private void ResetPaddle()
     {
+        motor.targetVelocity = -motorVel;
+        joint.motor = motor;
+        //joint.useMotor = true;
 
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        print("Exit");
-        motor.force = -1000;
-        motor.targetVelocity = -900;
-        Invoke("StopMotor", 1f);
-    }
-
-    private void StopMotor()
-    {
-        joint.useMotor = false;
+        triggerColl.enabled = true;
     }
 }

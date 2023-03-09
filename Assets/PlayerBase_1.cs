@@ -1,21 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerBase_1 : MonoBehaviour
 {
-    public Rigidbody rb;
-    Camera playerCam;
-    GameObject playerBody;
+    [SerializeField]
+    private Rigidbody rb;
+    private Camera playerCam;
+    private GameObject playerBody;
 
-
-    public float turnSpeed = 5f;
-    public float moveSpeed = 10f;
-    public float maxSpeed = 8f;
+    private float turnSpeed = 5f;
+    private float moveSpeed = 10f;
+    [SerializeField]
+    private float maxSpeed = 10f;
     public Vector3 moveDir = Vector3.zero;
     [Header("Stats")]
-    public float rbVelocity = 0f;
-    public float targetVelMag = 0f;
+    private float rbVelocity = 0f;
+    private float targetVelMag = 0f;
 
     //Debug
     public DebugPanel debugPanel;
@@ -117,13 +116,18 @@ public class PlayerBase_1 : MonoBehaviour
         {
             Vector3 normal = collision.GetContact(0).normal;
             Vector3 bounceHeight = Vector3.up * 0.5f;   //bounceUp = 0.5f;
-            Vector3 bounceVector = (normal + bounceHeight) * 500f;  //bounceForce = 500f;
+            Vector3 bounceVector = (normal + bounceHeight) * 2500f;  //bounceForce = 500f;
             rb.AddForce(bounceVector);
         }
-        else if(collision.gameObject.tag == "Ramp")
+        else if (collision.gameObject.tag == "Ramp")
         {
             Vector3 rampForce = collision.transform.forward * 12f;
             rb.AddForce(rampForce, ForceMode.VelocityChange);
+        }
+        else if (collision.gameObject.tag == "Target")
+        {
+            ScoreManager.instance.UpdateScore(100);
+            Destroy(collision.gameObject);
         }
         //Duplicate for bouncy objects, but have player change direction too!
     }

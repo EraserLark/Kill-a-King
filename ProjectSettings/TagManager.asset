@@ -8,6 +8,7 @@ TagManager:
   - Bumper
   - Entity
   - Ramp
+  - Target
   layers:
   - Default
   - TransparentFX
