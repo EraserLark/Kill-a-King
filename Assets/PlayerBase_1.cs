@@ -124,12 +124,16 @@ public class PlayerBase_1 : MonoBehaviour
             Vector3 rampForce = collision.transform.forward * 12f;
             rb.AddForce(rampForce, ForceMode.VelocityChange);
         }
-        else if (collision.gameObject.tag == "Target")
+        //Duplicate for bouncy objects, but have player change direction too!
+    }
+
+    private void OnTriggerEnter(Collider collider)
+    {
+        if(collider.gameObject.tag == "Target")
         {
             ScoreManager.instance.UpdateScore(100);
-            Destroy(collision.gameObject);
+            Destroy(collider.gameObject);
         }
-        //Duplicate for bouncy objects, but have player change direction too!
     }
 
     private void OnDrawGizmos()
