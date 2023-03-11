@@ -85,6 +85,7 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
+    /*
     private void OnTriggerExit(Collider collider)
     {
         if (collider.tag == "Player")
@@ -93,6 +94,7 @@ public class EnemyBase : MonoBehaviour
             moveDir = homeBase;
         }
     }
+    */
 
     private void OnDrawGizmosSelected()
     {
