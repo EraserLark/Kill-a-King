@@ -127,12 +127,21 @@ public class PlayerBase_1 : MonoBehaviour
         //Duplicate for bouncy objects, but have player change direction too!
     }
 
+<<<<<<< Updated upstream
     private void OnTriggerEnter(Collider collider)
     {
         if(collider.gameObject.tag == "Target")
         {
             ScoreManager.instance.UpdateScore(100);
             Destroy(collider.gameObject);
+=======
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Target")
+        {
+            ScoreManager.instance.UpdateScore(100);
+            Destroy(other.gameObject);
+>>>>>>> Stashed changes
         }
     }
 
