@@ -30,13 +30,12 @@ public class Enemy : Actor
                 moveDir = (target.transform.position - transform.position).normalized;
                 break;
             case EnemyState.RETURN:
-                moveDir = (homeBase - transform.position).normalized;
+                Vector3 distToBase = homeBase - transform.position;
+                moveDir = distToBase.normalized;
 
-                Vector3 roundedPos = new Vector3(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y), Mathf.RoundToInt(transform.position.z));
-                if (roundedPos == homeBase)
+                if (distToBase.magnitude < 0.5f)
                 {
                     currentState = EnemyState.SLEEP;
-                    moveDir = Vector3.forward;
                 }
                 break;
         }
@@ -44,7 +43,7 @@ public class Enemy : Actor
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
+        if(other.GetComponent<Player>())
         {
             currentState = EnemyState.CHASE;
             target = other.gameObject;
@@ -53,7 +52,7 @@ public class Enemy : Actor
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.GetComponent<Player>())
         {
             currentState = EnemyState.RETURN;
             target = null;
