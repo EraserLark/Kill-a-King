@@ -2,11 +2,9 @@ using UnityEngine;
 
 public class PlayerCam : MonoBehaviour
 {
-    public GameObject player;
-    public float camDist = 5f;
-    public float camHeight = 10f;
-    public float turnSpeed = 5f;
-    Vector3 playerCenter;
+    private float camDist = 6f;
+    private float camHeight = 5f;
+    private float turnSpeed = 5f;
     Vector3 camPos;
 
     //Gizmos
@@ -14,47 +12,44 @@ public class PlayerCam : MonoBehaviour
 
     private void Awake()
     {
-         camPos = new Vector3(camDist, camHeight, camDist);
+        camPos = new Vector3(camDist, camHeight, camDist);
+        UpdateCamLookDir();
+    }
 
-        //Copy of code run when swiveling camera, just to set it up right at start
-        Vector3 lookVec = ((Vector3.up * 2f) - camPos).normalized;
+    public void UpdateCamLookDir()
+    {
+        Vector3 lookVec = ((Vector3.up * 2f) - camPos).normalized;  //2f = offset height off player center
         Quaternion lookDir = Quaternion.LookRotation(lookVec);
         transform.rotation = lookDir;
     }
 
-    private void Update()
+    public void UpdateCamPosition(Transform playerTransform)
     {
-        if (Input.GetButton("Fire1"))
-        {
-            Time.timeScale = 0.5f;
-
-            float rotAmt = turnSpeed * Input.GetAxis("Mouse X");
-            Quaternion camAng = Quaternion.AngleAxis(rotAmt, Vector3.up);
-            camPos = camAng * camPos;   //Rotate camPos by Quaternion
-
-            Vector3 lookVec = ((Vector3.up * 2f) - camPos).normalized;  //2f = offset height off player center
-            Quaternion lookDir = Quaternion.LookRotation(lookVec);
-            transform.rotation = lookDir;
-
-            Time.fixedDeltaTime = 0.02f * Time.timeScale;   //For consistency
-        }
-        else if (Input.GetButtonUp("Fire1"))
-        {
-            Time.timeScale = 1f;
-            //player.GetComponent<PlayerBase_1>().moveDir = transform.forward;  //Slows down b/c forward is angled towards ground for cam!!
-            //How to get the 'forward' direction without caring about the y...
-            Vector3 flatForward = new Vector3(transform.forward.x, 0f, transform.forward.z);
-            player.GetComponent<PlayerBase_1>().moveDir = flatForward;
-
-            //Rotate playerBody
-            Transform playerBody = player.transform.GetChild(0);
-            playerBody.rotation = Quaternion.LookRotation(flatForward);
-
-            Time.fixedDeltaTime = 0.02f * Time.timeScale;   //For consistency
-        }
-
-        Vector3 trueCamPos = player.transform.TransformPoint(camPos);   //Make relative to player
+        Vector3 trueCamPos = playerTransform.TransformPoint(camPos);   //Make relative to player
         transform.position = trueCamPos;
+    }
+
+    public void HoldCamera()
+    {
+        Time.timeScale = 0.5f;
+
+        float rotAmt = turnSpeed * Input.GetAxis("Mouse X");
+        Quaternion camAng = Quaternion.AngleAxis(rotAmt, Vector3.up);
+        camPos = camAng * camPos;   //Rotate camPos by Quaternion
+
+        UpdateCamLookDir();
+
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;   //For consistency
+    }
+
+    public Vector3 ReleaseCamera()
+    {
+        Time.timeScale = 1f;
+        Vector3 playerForward = new Vector3(transform.forward.x, 0f, transform.forward.z);
+
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;   //For consistency
+        //player.GetComponent<PlayerBase_1>().moveDir = flatForward;
+        return playerForward;
     }
 
     private void OnDrawGizmos()

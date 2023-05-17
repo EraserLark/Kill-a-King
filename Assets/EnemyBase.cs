@@ -85,17 +85,6 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
-    /*
-    private void OnTriggerExit(Collider collider)
-    {
-        if (collider.tag == "Player")
-        {
-            state = EnemyState.RETURN;
-            moveDir = homeBase;
-        }
-    }
-    */
-
     private void OnDrawGizmosSelected()
     {
         //Gizmos.color = Color.blue;
