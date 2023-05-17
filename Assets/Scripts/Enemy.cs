@@ -7,16 +7,12 @@ public class Enemy : Actor
     private Vector3 homeBase;
     private GameObject target;
 
-    public void Awake()
-    {
-        Init();
-    }
-
     public override void Init()
     {
         base.Init();
-        currentState = EnemyState.SLEEP;
         homeBase = gameObject.transform.position;
+        currentState = EnemyState.SLEEP;
+        isResting = true;
     }
 
     private void Update()
@@ -36,6 +32,7 @@ public class Enemy : Actor
                 if (distToBase.magnitude < 0.5f)
                 {
                     currentState = EnemyState.SLEEP;
+                    isResting = true;
                 }
                 break;
         }
@@ -46,6 +43,7 @@ public class Enemy : Actor
         if(other.GetComponent<Player>())
         {
             currentState = EnemyState.CHASE;
+            isResting = false;
             target = other.gameObject;
         }
     }

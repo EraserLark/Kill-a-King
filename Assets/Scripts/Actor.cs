@@ -11,8 +11,14 @@ abstract public class Actor : MonoBehaviour
 	[SerializeField]
 	protected float maxSpeed;
     protected Vector3 moveDir;
+    protected bool isResting;
 
-	public virtual void Init()
+    public void Awake()
+    {
+        Init();
+    }
+
+    public virtual void Init()
 	{
 		rb = gameObject.GetComponent<Rigidbody>();
 
@@ -52,7 +58,10 @@ abstract public class Actor : MonoBehaviour
 
 	public void FixedUpdate()
     {
-		Vector3 velocity = CalculateVelocity();
-		Move(velocity);
+        if(!isResting)
+        {
+		    Vector3 velocity = CalculateVelocity();
+		    Move(velocity);
+        }
     }
 }

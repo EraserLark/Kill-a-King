@@ -6,14 +6,10 @@ public class Player : Actor
     private PlayerCam playerCam;
     private DebugPanel debugPanel;
 
-    public void Awake()
-    {
-        Init();
-    }
-
     public override void Init()
     {
         base.Init();
+        isResting = false;
         moveDir = transform.forward;
     }
 
