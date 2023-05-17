@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Ramp : CollideReactor
@@ -9,7 +7,7 @@ public class Ramp : CollideReactor
         Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
         if (rb != null)
         {
-            Vector3 rampForce = transform.forward * 3f * rb.mass;
+            Vector3 rampForce = transform.forward * 3f;
             rb.AddForce(rampForce, ForceMode.VelocityChange);
         }
     }

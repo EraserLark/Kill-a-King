@@ -23,6 +23,16 @@ public abstract class CollideReactor : Reactor
 
 public abstract class TriggerReactor : Reactor
 {
-    public virtual void TrigEnter() { }
-    public virtual void TrigExit() { }
+    public virtual void TrigEnter(Collider other) { }
+    public virtual void TrigExit(Collider other) { }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        TrigEnter(other);
+    }
+    
+    private void OnTriggerExit(Collider other)
+    {
+        TrigExit(other);
+    }
 }
