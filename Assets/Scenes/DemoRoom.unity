@@ -2235,6 +2235,7 @@ GameObject:
   - component: {fileID: 2032754071}
   - component: {fileID: 2032754070}
   - component: {fileID: 2032754069}
+  - component: {fileID: 2032754073}
   m_Layer: 0
   m_Name: Ramp
   m_TagString: Ramp
@@ -2320,6 +2321,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 325, y: 245, z: 0}
+--- !u!114 &2032754073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2032754068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bbc5b9fab52ed54e8f8fed6d3797249, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2058768961
 GameObject:
   m_ObjectHideFlags: 0
