@@ -51,9 +51,7 @@ public class PlayerCam : MonoBehaviour
     {
         Time.timeScale = 1f;
         Vector3 playerForward = new Vector3(transform.forward.x, 0f, transform.forward.z);
-
         Time.fixedDeltaTime = 0.02f * Time.timeScale;   //For consistency
-        //player.GetComponent<PlayerBase_1>().moveDir = flatForward;
         return playerForward;
     }
 

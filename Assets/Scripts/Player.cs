@@ -27,4 +27,24 @@ public class Player : Actor
 
         playerCam.UpdateCamPosition(gameObject.transform);
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Solid")
+        {
+            Vector3 normal = collision.GetContact(0).normal;
+            Vector3 playerDir = moveDir;
+
+            //Calculate reflected angle
+            float dot = Vector3.Dot(normal, playerDir);
+            Vector3 newDir = playerDir - (2 * dot * normal);
+            moveDir = newDir;
+
+            //Negates speed loss while changing direction
+            float bounceForce = prevVelocity.magnitude;
+            Vector3 bounceVector = moveDir * bounceForce;
+
+            rb.AddForce(bounceVector, ForceMode.VelocityChange);
+        }
+    }
 }

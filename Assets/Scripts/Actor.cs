@@ -12,6 +12,7 @@ abstract public class Actor : MonoBehaviour
 	protected float maxSpeed;
     protected Vector3 moveDir;
     protected bool isResting;
+    protected Vector3 prevVelocity;
 
     public void Awake()
     {
@@ -47,10 +48,6 @@ abstract public class Actor : MonoBehaviour
         Quaternion lookRot = Quaternion.LookRotation(moveDir, Vector3.up);
         body.transform.rotation = lookRot;
 
-        //DEBUG
-        //rbVelocity = rb.velocity.magnitude;
-        //debugPanel.UpdateSpeed(rbVelocity);
-
         return targetVel;
     }
 
@@ -62,6 +59,7 @@ abstract public class Actor : MonoBehaviour
         {
 		    Vector3 velocity = CalculateVelocity();
 		    Move(velocity);
+            prevVelocity = rb.velocity;
         }
     }
 }
