@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 8718497691212240821}
   - component: {fileID: 8718497691212240818}
   - component: {fileID: 8718497691212240819}
-  - component: {fileID: 8718497691212240816}
   - component: {fileID: 8718497691212240841}
+  - component: {fileID: 2092494911702464301}
   m_Layer: 0
   m_Name: Flipper
   m_TagString: Untagged
@@ -154,21 +154,6 @@ HingeJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
---- !u!114 &8718497691212240816
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8718497691212240817}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79827ea17ab4d074caec4e581081f86b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  motorForce: 2500
-  motorVel: 900
-  motorFreeSpin: 0
 --- !u!65 &8718497691212240841
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -182,6 +167,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 3}
   m_Center: {x: 0, y: 0, z: 2}
+--- !u!114 &2092494911702464301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8718497691212240817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbf29c946fd79bb41be3289f2791ff4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  motorForce: 2500
+  motorVel: 900
+  motorFreeSpin: 0
 --- !u!1 &8718497691684736404
 GameObject:
   m_ObjectHideFlags: 0
