@@ -2,10 +2,15 @@ using UnityEngine;
 
 public class PlayerCam : MonoBehaviour
 {
+    [SerializeField]
     private float camDist = 6f;
+    [SerializeField]
     private float camHeight = 5f;
+    [SerializeField]
+    private float camOffset = 2f;
+    [SerializeField]
     private float turnSpeed = 5f;
-    Vector3 camPos;
+    private Vector3 camPos;
 
     //Gizmos
     Vector3 gizLookDir;
@@ -18,7 +23,7 @@ public class PlayerCam : MonoBehaviour
 
     public void UpdateCamLookDir()
     {
-        Vector3 lookVec = ((Vector3.up * 2f) - camPos).normalized;  //2f = offset height off player center
+        Vector3 lookVec = ((Vector3.up * camOffset) - camPos).normalized;
         Quaternion lookDir = Quaternion.LookRotation(lookVec);
         transform.rotation = lookDir;
     }
