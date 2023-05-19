@@ -33,18 +33,20 @@ public class Player : Actor
         if(collision.gameObject.tag == "Solid")
         {
             Vector3 normal = collision.GetContact(0).normal;
-            Vector3 playerDir = moveDir;
+            float dot = Vector3.Dot(normal, moveDir);
 
-            //Calculate reflected angle
-            float dot = Vector3.Dot(normal, playerDir);
-            Vector3 newDir = playerDir - (2 * dot * normal);
-            moveDir = newDir;
+            if (dot < 0)
+            {
+                //Calculate reflected angle
+                Vector3 newDir = moveDir - (2 * dot * normal);
+                moveDir = newDir;
 
-            //Negates speed loss while changing direction
-            float bounceForce = prevVelocity.magnitude;
-            Vector3 bounceVector = moveDir * bounceForce;
+                //Negates speed loss while changing direction
+                float bounceForce = prevVelocity.magnitude;
+                Vector3 bounceVector = moveDir * bounceForce;
 
-            rb.AddForce(bounceVector, ForceMode.VelocityChange);
+                rb.AddForce(bounceVector, ForceMode.VelocityChange);
+            }
         }
     }
 }
