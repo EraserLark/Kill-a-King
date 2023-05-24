@@ -46,6 +46,8 @@ public class Player : Actor
                 Vector3 bounceVector = moveDir * bounceForce;
 
                 rb.AddForce(bounceVector, ForceMode.VelocityChange);
+
+                playerCam.ReorientCamera(moveDir);
             }
         }
     }
