@@ -17,7 +17,7 @@ public class Player : Actor
     {
         if(Input.GetButtonDown("Fire1"))
         {
-            playerCam.StartHoldCamera();
+            playerCam.BeginHoldCamera();
             playerCam.HoldCamera();
         }
         else if (Input.GetButton("Fire1"))
@@ -54,5 +54,11 @@ public class Player : Actor
                 playerCam.ReorientCamera(moveDir);
             }
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(transform.position, transform.position + rb.velocity);
     }
 }

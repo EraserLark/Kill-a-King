@@ -36,18 +36,17 @@ public class PlayerCam : MonoBehaviour
 
     public void UpdateCameraRotation(float rotValue)
     {
-        float rotTotal = turnSpeed * rotValue;
-        Quaternion camAng = Quaternion.AngleAxis(rotTotal, Vector3.up);
-        camPos = camAng * camPos;   //Rotate camPos by Quaternion
+        Quaternion camAng = Quaternion.AngleAxis(rotValue, Vector3.up);
+        camPos = camAng * camPos;   //Rotate camera position by Quaternion
     }
 
     public void UpdateCamPosition(Transform playerTransform)
     {
-        Vector3 trueCamPos = playerTransform.TransformPoint(camPos);   //Make relative to player
-        transform.position = trueCamPos;
+        Vector3 playerCamPos = playerTransform.TransformPoint(camPos);
+        transform.position = playerCamPos;
     }
 
-    public void StartHoldCamera()
+    public void BeginHoldCamera()
     {
         isBeingHeld = true;
         if (currentCoroutine != null)
@@ -60,7 +59,7 @@ public class PlayerCam : MonoBehaviour
     }
     public void HoldCamera()
     {
-        UpdateCameraRotation(Input.GetAxis("Mouse X"));
+        UpdateCameraRotation(Input.GetAxis("Mouse X") * turnSpeed);
         UpdateCamLookDir();
     }
 
@@ -78,35 +77,48 @@ public class PlayerCam : MonoBehaviour
     {
         if(!isBeingHeld)
         {
-            Vector3 flatCamDir = new Vector3(transform.forward.x, 0f, transform.forward.z);
-            float dotProd = Vector3.Dot(playerMoveDir.normalized, flatCamDir.normalized);
+            if(currentCoroutine != null)
+            {
+                StopCoroutine(currentCoroutine);
+            }
+
+            Vector3 camFlatDir = new Vector3(transform.forward.x, 0f, transform.forward.z);
+            float dotProd = Vector3.Dot(playerMoveDir.normalized, camFlatDir.normalized);
             float angleDiffRad = Mathf.Acos(dotProd);
 
             //Determine if camera needs to rotate left/right to realign behind player
-            float determinant = (playerMoveDir.x * flatCamDir.z) - (playerMoveDir.z * flatCamDir.x);
+            float determinant = (playerMoveDir.x * camFlatDir.z) - (playerMoveDir.z * camFlatDir.x);
             if(determinant < 0)
             {
                 angleDiffRad = -angleDiffRad;
             }
 
-            float angDegAmt = (angleDiffRad * Mathf.Rad2Deg) / turnTime / turnSpeed;
+            float angDegTotal = angleDiffRad * Mathf.Rad2Deg;
 
             timeElapsed = 0f;
-            currentCoroutine = AutoMoveCam(angDegAmt);
+            currentCoroutine = AutoMoveCam(angDegTotal);
             StartCoroutine(currentCoroutine);
         }
     }
 
-    public IEnumerator AutoMoveCam(float angDegAmt)
+    public IEnumerator AutoMoveCam(float angDegTotal)
     {
+        float angDegTally = 0f;
+
         while(timeElapsed < turnTime)
         {
-            UpdateCameraRotation(angDegAmt * Time.deltaTime);
+            float angDegAmt = (angDegTotal / turnTime) * Time.deltaTime;
+            UpdateCameraRotation(angDegAmt);
             UpdateCamLookDir();
 
+            angDegTally += angDegAmt;
             timeElapsed += Time.deltaTime;
             yield return null;
         }
+
+        float angDegRemainder = angDegTotal - angDegTally;
+        UpdateCameraRotation(angDegRemainder);
+        UpdateCamLookDir();
 
         timeElapsed = 0f;
         currentCoroutine = null;

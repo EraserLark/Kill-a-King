@@ -18,6 +18,15 @@ abstract public class Actor : MonoBehaviour
     {
         Init();
     }
+	public void FixedUpdate()
+    {
+        if(!isResting)
+        {
+		    Vector3 velocity = CalculateVelocity();
+		    Move(velocity);
+            prevVelocity = rb.velocity;
+        }
+    }
 
     public virtual void Init()
 	{
@@ -58,15 +67,8 @@ abstract public class Actor : MonoBehaviour
         return targetVel;
     }
 
-	public void Move(Vector3 targetVel) { rb.AddForce(targetVel, ForceMode.VelocityChange); }
-
-	public void FixedUpdate()
+	public void Move(Vector3 targetVel)
     {
-        if(!isResting)
-        {
-		    Vector3 velocity = CalculateVelocity();
-		    Move(velocity);
-            prevVelocity = rb.velocity;
-        }
+        rb.AddForce(targetVel, ForceMode.VelocityChange);
     }
 }
