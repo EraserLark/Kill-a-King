@@ -36,7 +36,14 @@ abstract public class Actor : MonoBehaviour
         //Rough speed capping
         if (currentSpeed > maxSpeed)
         {
+            float dot = Vector3.Dot(rb.velocity.normalized, moveDir);
             float speedDiff = currentSpeed - maxSpeed;
+
+            if(dot > 0)
+            {
+                speedDiff = -speedDiff;
+            }
+
             targetVel *= speedDiff;
         }
         else

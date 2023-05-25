@@ -15,7 +15,12 @@ public class Player : Actor
 
     private void Update()
     {
-        if (Input.GetButton("Fire1"))
+        if(Input.GetButtonDown("Fire1"))
+        {
+            playerCam.StartHoldCamera();
+            playerCam.HoldCamera();
+        }
+        else if (Input.GetButton("Fire1"))
         {
             playerCam.HoldCamera();
         }
@@ -35,9 +40,9 @@ public class Player : Actor
             Vector3 normal = collision.GetContact(0).normal;
             float dot = Vector3.Dot(normal, moveDir);
 
+            //Only reflect direction if player is facing towards wall
             if (dot < 0)
             {
-                //Calculate reflected angle
                 Vector3 newDir = moveDir - (2 * dot * normal);
                 moveDir = newDir;
 
@@ -46,7 +51,6 @@ public class Player : Actor
                 Vector3 bounceVector = moveDir * bounceForce;
 
                 rb.AddForce(bounceVector, ForceMode.VelocityChange);
-
                 playerCam.ReorientCamera(moveDir);
             }
         }

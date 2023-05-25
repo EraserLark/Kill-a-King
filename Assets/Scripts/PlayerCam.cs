@@ -47,30 +47,30 @@ public class PlayerCam : MonoBehaviour
         transform.position = trueCamPos;
     }
 
-    public void HoldCamera()
+    public void StartHoldCamera()
     {
         isBeingHeld = true;
-        if(currentCoroutine != null)
+        if (currentCoroutine != null)
         {
             StopCoroutine(currentCoroutine);
         }
 
         Time.timeScale = 0.5f;
-
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;   //For consistency
+    }
+    public void HoldCamera()
+    {
         UpdateCameraRotation(Input.GetAxis("Mouse X"));
         UpdateCamLookDir();
-
-        Time.fixedDeltaTime = 0.02f * Time.timeScale;   //For consistency
     }
 
     public Vector3 ReleaseCamera()
     {
         isBeingHeld = false;
         Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;   //For consistency
 
         Vector3 playerForward = new Vector3(transform.forward.x, 0f, transform.forward.z);
-
-        Time.fixedDeltaTime = 0.02f * Time.timeScale;   //For consistency
         return playerForward;
     }
 
@@ -82,6 +82,7 @@ public class PlayerCam : MonoBehaviour
             float dotProd = Vector3.Dot(playerMoveDir.normalized, flatCamDir.normalized);
             float angleDiffRad = Mathf.Acos(dotProd);
 
+            //Determine if camera needs to rotate left/right to realign behind player
             float determinant = (playerMoveDir.x * flatCamDir.z) - (playerMoveDir.z * flatCamDir.x);
             if(determinant < 0)
             {
