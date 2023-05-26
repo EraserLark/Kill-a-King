@@ -1970,7 +1970,7 @@ GameObject:
   - component: {fileID: 1220114427}
   - component: {fileID: 1220114426}
   - component: {fileID: 1220114425}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall_NoMod
   m_TagString: Solid
   m_Icon: {fileID: 0}

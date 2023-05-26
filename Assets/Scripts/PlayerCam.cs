@@ -19,12 +19,32 @@ public class PlayerCam : MonoBehaviour
     private float turnTime = 0.3f;
     private IEnumerator currentCoroutine = null;
 
+    Ray lookRay;
+    int layerMask;
+    RaycastHit hit;
+
     Vector3 gizLookDir;
 
     private void Awake()
     {
         camPos = new Vector3(camDist, camHeight, camDist);
         UpdateCamLookDir();
+
+        layerMask = 1 << 8;
+    }
+
+    private void FixedUpdate()
+    {
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, camDist, layerMask))
+        {
+            Renderer renderer = hit.transform.gameObject.GetComponent<Renderer>();
+            if (renderer != null)
+            {
+                Color matColor = renderer.material.color;
+                matColor.a = 0.35f;
+                renderer.material.color = matColor;
+            }
+        }
     }
 
     public void UpdateCamLookDir()
@@ -127,6 +147,6 @@ public class PlayerCam : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, transform.position + gizLookDir);
+        //Gizmos.DrawRay(lookRay);
     }
 }
