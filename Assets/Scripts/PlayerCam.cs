@@ -22,6 +22,7 @@ public class PlayerCam : MonoBehaviour
     Ray lookRay;
     int layerMask;
     RaycastHit hit;
+    Solid currentSolid;
 
     Vector3 gizLookDir;
 
@@ -37,13 +38,16 @@ public class PlayerCam : MonoBehaviour
     {
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, camDist, layerMask))
         {
-            Renderer renderer = hit.transform.gameObject.GetComponent<Renderer>();
-            if (renderer != null)
+            currentSolid = hit.transform.gameObject.GetComponent<Solid>();
+            if(currentSolid != null)
             {
-                Color matColor = renderer.material.color;
-                matColor.a = 0.35f;
-                renderer.material.color = matColor;
+                currentSolid.FadeOut();
             }
+        }
+        else if(currentSolid)
+        {
+            currentSolid.FadeIn();
+            currentSolid = null;
         }
     }
 
