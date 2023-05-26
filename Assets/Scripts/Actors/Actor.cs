@@ -18,6 +18,7 @@ abstract public class Actor : MonoBehaviour
     {
         Init();
     }
+
 	public void FixedUpdate()
     {
         if(!isResting)

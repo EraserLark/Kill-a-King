@@ -35,7 +35,7 @@ public class Player : Actor
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Solid")
+        if(collision.gameObject.CompareTag("Solid"))
         {
             Vector3 normal = collision.GetContact(0).normal;
             float dot = Vector3.Dot(normal, moveDir);
