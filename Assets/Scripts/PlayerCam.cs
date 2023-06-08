@@ -9,8 +9,6 @@ public class PlayerCam : MonoBehaviour
     private float camHeight = 5f;
     [SerializeField]
     private float camOffset = 2f;
-    [SerializeField]
-    private const float turnSpeed = 5f;
     private Vector3 camPos;
 
     private bool isBeingHeld = false;
@@ -88,9 +86,9 @@ public class PlayerCam : MonoBehaviour
         Time.timeScale = 0.5f;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;   //For consistency
     }
-    public void HoldCamera()
+    public void HoldCamera(float rotAmt)
     {
-        UpdateCameraRotation(Input.GetAxis("Mouse X") * turnSpeed);
+        UpdateCameraRotation(rotAmt); //* turnSpeed)
         UpdateCamLookDir();
     }
 

@@ -237,6 +237,7 @@ GameObject:
   - component: {fileID: 75244461}
   - component: {fileID: 75244460}
   - component: {fileID: 75244459}
+  - component: {fileID: 75244463}
   m_Layer: 0
   m_Name: Wall_NoMod (2)
   m_TagString: Solid
@@ -322,6 +323,18 @@ Transform:
   m_Father: {fileID: 1103685674}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &75244463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 75244458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d02efa8b22f0cc54ba6447a3a139602f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &203139894
 GameObject:
   m_ObjectHideFlags: 0
@@ -817,12 +830,12 @@ GameObject:
   - component: {fileID: 458243651}
   - component: {fileID: 458243650}
   m_Layer: 0
-  m_Name: DebugCam_3
+  m_Name: DebugCam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!20 &458243650
 Camera:
   m_ObjectHideFlags: 0
@@ -1367,6 +1380,7 @@ GameObject:
   - component: {fileID: 831758109}
   - component: {fileID: 831758108}
   - component: {fileID: 831758107}
+  - component: {fileID: 831758111}
   m_Layer: 0
   m_Name: Wall_NoMod (1)
   m_TagString: Solid
@@ -1452,6 +1466,18 @@ Transform:
   m_Father: {fileID: 1103685674}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &831758111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 831758106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d02efa8b22f0cc54ba6447a3a139602f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &902686208
 GameObject:
   m_ObjectHideFlags: 0
@@ -1464,6 +1490,7 @@ GameObject:
   - component: {fileID: 902686212}
   - component: {fileID: 902686211}
   - component: {fileID: 902686210}
+  - component: {fileID: 902686213}
   m_Layer: 0
   m_Name: Wall_NoMod (3)
   m_TagString: Solid
@@ -1549,6 +1576,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 902686208}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &902686213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902686208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d02efa8b22f0cc54ba6447a3a139602f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &993621652
 GameObject:
   m_ObjectHideFlags: 0
@@ -3266,6 +3305,7 @@ MonoBehaviour:
   moveSpeed: 0
   maxSpeed: 8
   playerCam: {fileID: 2953238}
+  swipeSensitivity: 0.1
 --- !u!1001 &2091429999
 PrefabInstance:
   m_ObjectHideFlags: 0

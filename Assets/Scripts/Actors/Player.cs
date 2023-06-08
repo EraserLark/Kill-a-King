@@ -6,6 +6,10 @@ public class Player : Actor
     private PlayerCam playerCam;
     private DebugPanel debugPanel;
 
+    [SerializeField]
+    [Range(.01f, 1f)]
+    private float swipeSensitivity = 50f;
+
     public override void Init()
     {
         base.Init();
@@ -15,19 +19,40 @@ public class Player : Actor
 
     private void Update()
     {
-        if(Input.GetButtonDown("Fire1"))
+        //if(Input.GetButtonDown("Fire1"))
+        //{
+        //    playerCam.BeginHoldCamera();
+        //    playerCam.HoldCamera();
+        //}
+        //else if (Input.GetButton("Fire1"))
+        //{
+        //    playerCam.HoldCamera();
+        //}
+        //else if (Input.GetButtonUp("Fire1"))
+        //{
+        //    moveDir = playerCam.ReleaseCamera();
+        //    body.transform.rotation = Quaternion.LookRotation(moveDir);
+        //}
+
+        if(Input.touchCount > 0)
         {
-            playerCam.BeginHoldCamera();
-            playerCam.HoldCamera();
-        }
-        else if (Input.GetButton("Fire1"))
-        {
-            playerCam.HoldCamera();
-        }
-        else if (Input.GetButtonUp("Fire1"))
-        {
-            moveDir = playerCam.ReleaseCamera();
-            body.transform.rotation = Quaternion.LookRotation(moveDir);
+            Touch touch = Input.GetTouch(0);
+            float rotAmt = touch.deltaPosition.x * swipeSensitivity;
+
+            if (touch.phase == TouchPhase.Began)
+            {
+                playerCam.BeginHoldCamera();
+                playerCam.HoldCamera(rotAmt);
+            }
+            else if(touch.phase == TouchPhase.Moved)
+            {
+                playerCam.HoldCamera(rotAmt);
+            }
+            else if(touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
+            {
+                moveDir = playerCam.ReleaseCamera();
+                body.transform.rotation = Quaternion.LookRotation(moveDir);
+            }
         }
 
         playerCam.UpdateCamPosition(gameObject.transform);
