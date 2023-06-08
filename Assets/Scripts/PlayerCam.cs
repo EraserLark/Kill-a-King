@@ -19,6 +19,9 @@ public class PlayerCam : MonoBehaviour
     private float turnTime = 0.3f;
     private IEnumerator currentCoroutine = null;
 
+    [SerializeField]
+    private Transform playerTransform;
+
     Ray lookRay;
     int layerMask;
     RaycastHit hit;
@@ -36,7 +39,9 @@ public class PlayerCam : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, camDist, layerMask))
+        Vector3 playerDir = (playerTransform.position - transform.position).normalized;
+
+        if (Physics.Raycast(transform.position, playerDir, out hit, camDist, layerMask))
         {
             currentSolid = hit.transform.gameObject.GetComponent<Solid>();
             if(currentSolid != null)
@@ -68,6 +73,8 @@ public class PlayerCam : MonoBehaviour
     {
         Vector3 playerCamPos = playerTransform.TransformPoint(camPos);
         transform.position = playerCamPos;
+
+        this.playerTransform = playerTransform;
     }
 
     public void BeginHoldCamera()
@@ -151,6 +158,7 @@ public class PlayerCam : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        //Gizmos.DrawRay(lookRay);
+        Vector3 playerDir = (playerTransform.position - transform.position).normalized;
+        Gizmos.DrawLine(transform.position, transform.position + playerDir * camDist);
     }
 }
