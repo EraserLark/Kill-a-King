@@ -100,7 +100,7 @@ public class EnemyBase : MonoBehaviour
         Gizmos.DrawLine(transform.position, transform.position + homeDir);
 
         detectColl.radius = detectRadius;
-        Handles.color = Color.red;
-        Handles.DrawWireDisc(transform.position, Vector3.up, detectRadius);
+        //Handles.color = Color.red;
+        //Handles.DrawWireDisc(transform.position, Vector3.up, detectRadius);
     }
 }

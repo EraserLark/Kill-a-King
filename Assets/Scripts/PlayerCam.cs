@@ -125,12 +125,12 @@ public class PlayerCam : MonoBehaviour
             float angDegTotal = angleDiffRad * Mathf.Rad2Deg;
 
             timeElapsed = 0f;
-            currentCoroutine = AutoMoveCam(angDegTotal);
+            currentCoroutine = AutoRepositionCam(angDegTotal);
             StartCoroutine(currentCoroutine);
         }
     }
 
-    public IEnumerator AutoMoveCam(float angDegTotal)
+    public IEnumerator AutoRepositionCam(float angDegTotal)
     {
         float angDegTally = 0f;
 
@@ -139,12 +139,14 @@ public class PlayerCam : MonoBehaviour
             float angDegAmt = (angDegTotal / turnTime) * Time.deltaTime;
             UpdateCameraRotation(angDegAmt);
             UpdateCamLookDir();
+            UpdateCamPosition(playerTransform);
 
             angDegTally += angDegAmt;
             timeElapsed += Time.deltaTime;
             yield return null;
         }
 
+        //Leads to stutter at the end of turning?
         float angDegRemainder = angDegTotal - angDegTally;
         UpdateCameraRotation(angDegRemainder);
         UpdateCamLookDir();
