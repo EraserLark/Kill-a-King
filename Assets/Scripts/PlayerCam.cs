@@ -88,7 +88,7 @@ public class PlayerCam : MonoBehaviour
     }
     public void HoldCamera(float rotAmt)
     {
-        UpdateCameraRotation(rotAmt); //* turnSpeed)
+        UpdateCameraRotation(rotAmt);
         UpdateCamLookDir();
     }
 
@@ -134,7 +134,7 @@ public class PlayerCam : MonoBehaviour
     {
         float angDegTally = 0f;
 
-        while(timeElapsed < turnTime)
+        while (timeElapsed < turnTime)
         {
             float angDegAmt = (angDegTotal / turnTime) * Time.deltaTime;
             UpdateCameraRotation(angDegAmt);
@@ -146,10 +146,10 @@ public class PlayerCam : MonoBehaviour
             yield return null;
         }
 
-        //Leads to stutter at the end of turning?
         float angDegRemainder = angDegTotal - angDegTally;
         UpdateCameraRotation(angDegRemainder);
         UpdateCamLookDir();
+        UpdateCamPosition(playerTransform);
 
         timeElapsed = 0f;
         currentCoroutine = null;

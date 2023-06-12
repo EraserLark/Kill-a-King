@@ -19,22 +19,7 @@ public class Player : Actor
 
     private void Update()
     {
-        //if(Input.GetButtonDown("Fire1"))
-        //{
-        //    playerCam.BeginHoldCamera();
-        //    playerCam.HoldCamera();
-        //}
-        //else if (Input.GetButton("Fire1"))
-        //{
-        //    playerCam.HoldCamera();
-        //}
-        //else if (Input.GetButtonUp("Fire1"))
-        //{
-        //    moveDir = playerCam.ReleaseCamera();
-        //    body.transform.rotation = Quaternion.LookRotation(moveDir);
-        //}
-
-        if(Input.touchCount > 0)
+        if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
             float rotAmt = touch.deltaPosition.x * swipeSensitivity;
@@ -54,6 +39,23 @@ public class Player : Actor
                 body.transform.rotation = Quaternion.LookRotation(moveDir);
             }
         }
+
+        /*
+        if(Input.GetButtonDown("Fire1"))
+        {
+            playerCam.BeginHoldCamera();
+            playerCam.HoldCamera();
+        }
+        else if (Input.GetButton("Fire1"))
+        {
+            playerCam.HoldCamera();
+        }
+        else if (Input.GetButtonUp("Fire1"))
+        {
+            moveDir = playerCam.ReleaseCamera();
+            body.transform.rotation = Quaternion.LookRotation(moveDir);
+        }
+        */
 
         playerCam.UpdateCamPosition(gameObject.transform);
     }
